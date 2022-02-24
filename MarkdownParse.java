@@ -8,6 +8,9 @@ public class MarkdownParse {
 
     // Loop with a stack until finding the corresponding closeParen
     static int findCloseParen(String markdown, int openParen) {
+        if(markdown.indexOf(')') == -1){
+            return -1;
+        }
         int closeParen = openParen + 1;
         int openParenCount = 1;
         while (openParenCount > 0) {
@@ -18,6 +21,7 @@ public class MarkdownParse {
             }
             closeParen++;
         }
+
         return closeParen - 1;
 
     }
@@ -34,7 +38,9 @@ public class MarkdownParse {
 
             // The close paren we need may not be the next one in the file
             int closeParen = findCloseParen(markdown, openParen);
-            
+            if(closeParen < 0){
+                break;
+            }
             if(nextOpenBracket == -1 || nextCloseBracket == -1
                   || closeParen == -1 || openParen == -1) {
                 return toReturn;
